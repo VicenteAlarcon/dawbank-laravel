@@ -5,6 +5,9 @@ use App\Models\Cuenta;
 use Illuminate\Database\Eloquent\Model;
 class Movimiento extends Model
 {
+       protected $casts = [
+        'cantidad' => 'float',
+    ];
    
     public const INGRESO = 'ingreso';
     public const RETIRADA = 'retirada';
