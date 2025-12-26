@@ -9,6 +9,9 @@ use App\Models\Movimiento;
 class Cuenta extends Model
 {
     use SoftDeletes;
+    protected $casts = [
+    'iban' => 'string',
+];
    protected $fillable = [
     'nombre',
     'apellidos',

@@ -6,10 +6,29 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\SaldoInsuficienteException;
 use App\Exceptions\InvalidMovementException;
 use App\Exceptions\TaxationException;
+use App\Services\IbanGenerator;
 
 
 class CuentaService{
+    public function __construct(
+        private IbanGenerator $ibanGenerator
+    ){}
     
+    Public function crearCuenta(array $data): Cuenta 
+    {
+        return Cuenta::create([
+           'nombre' => $data['nombre'],
+            'apellidos' => $data['apellidos'],
+            'dni' => $data['dni'],
+            'iban' => $this->ibanGenerator->generateIban(),
+            'saldo' => 0,
+        ]);
+    }
+
+    //Método para generar iban que viene del servicio IbanGenerator//
+
+
+     
     public function ingresarDinero(Cuenta $cuenta, float $cantidad): void 
     {
         if($cantidad <= 0) {
