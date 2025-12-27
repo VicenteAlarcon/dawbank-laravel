@@ -3,9 +3,10 @@
 namespace App\Models;
 use App\Models\Cuenta;
 use Illuminate\Database\Eloquent\Model;
+
 class Movimiento extends Model
 {
-       protected $casts = [
+     protected $casts = [
         'cantidad' => 'float',
     ];
    

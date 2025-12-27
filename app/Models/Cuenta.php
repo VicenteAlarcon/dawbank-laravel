@@ -8,7 +8,7 @@ use App\Models\Movimiento;
 
 class Cuenta extends Model
 {
-    use SoftDeletes;
+use SoftDeletes;
     protected $casts = [
     'iban' => 'string',
 ];
@@ -23,4 +23,5 @@ class Cuenta extends Model
    public function movimientos() {
     return $this->hasMany(Movimiento::class);
    }
+
 }

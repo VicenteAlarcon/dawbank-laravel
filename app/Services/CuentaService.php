@@ -16,16 +16,18 @@ class CuentaService{
     
     Public function crearCuenta(array $data): Cuenta 
     {
+        //Método para generar iban que viene del servicio IbanGenerator//
+         $iban = $this->ibanGenerator->generateIban();
         return Cuenta::create([
            'nombre' => $data['nombre'],
             'apellidos' => $data['apellidos'],
             'dni' => $data['dni'],
-            'iban' => $this->ibanGenerator->generateIban(),
+            'iban' => $iban,
             'saldo' => 0,
         ]);
     }
 
-    //Método para generar iban que viene del servicio IbanGenerator//
+    
 
 
      

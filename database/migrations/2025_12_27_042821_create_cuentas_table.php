@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movimientos', function (Blueprint $table) {
+        Schema::create('cuentas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cuenta_id') ->constrained('cuentas')->onDelete('cascade');  
-            $table->decimal('cantidad', 10, 2);
-            $table->string('tipo');
+            $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('dni')->unique();
+            $table->string('iban', 24)->unique();
+            $table->decimal('saldo', 10, 2)->default(0);
             $table->timestamps();
-          
+            $table->SoftDeletes();
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movimientos');
+        Schema::dropIfExists('cuentas');
     }
 };
