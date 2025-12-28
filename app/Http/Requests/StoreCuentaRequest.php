@@ -24,7 +24,16 @@ class StoreCuentaRequest extends FormRequest
         return [
                'nombre' => ['required', 'string', 'min:2', 'max:50'],
             'apellidos' => ['required', 'string', 'min:2', 'max:100'],
-            'dni' => ['required', 'string', 'size:9'],
+            'dni' => ['required', 'string', 'regex:/^[0-9]{8}[A-Z]$/'],
+        ];
+    }
+     public function messages(): array
+    {
+        return [
+            'nombre.required' => 'El nombre es obligatorio',
+            'apellidos.required' => 'Los apellidos son obligatorios',
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.regex' => 'El DNI debe tener 8 números y una letra mayúscula',
         ];
     }
 }

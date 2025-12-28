@@ -29,10 +29,11 @@ public function register(): void
         ], 202);
     });
 
-    $this->rendrable(function (InvalidDniException $e) {
-        return response()->json([
-            'error' => $e->getMessage()
-        ], 422);
-    });
+   $this->renderable(function (\App\Exceptions\InvalidDniException $e, $request) {
+    return response()->json([
+        'message' => $e->getMessage()
+    ], 400);
+});
+
 }
 }
