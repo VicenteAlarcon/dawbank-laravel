@@ -7,17 +7,25 @@ use App\Exceptions\SaldoInsuficienteException;
 use App\Exceptions\InvalidMovementException;
 use App\Exceptions\TaxationException;
 use App\Services\IbanGenerator;
+use App\Services\DniValidator;
 
 
 class CuentaService{
     public function __construct(
-        private IbanGenerator $ibanGenerator
+        private IbanGenerator $ibanGenerator,
+        private DniValidator $dniValidator
     ){}
     
     Public function crearCuenta(array $data): Cuenta 
     {
         //Método para generar iban que viene del servicio IbanGenerator//
+      
+         if (!isset($data['nombre'], $data['apellidos'], $data['dni'])) {
+    throw new InvalidArgumentException('Missing required account data');
+}   
          $iban = $this->ibanGenerator->generateIban();
+         $this->dniValidator->validate($data['dni']);
+
         return Cuenta::create([
            'nombre' => $data['nombre'],
             'apellidos' => $data['apellidos'],

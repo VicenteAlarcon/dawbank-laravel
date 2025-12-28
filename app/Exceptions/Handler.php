@@ -28,5 +28,11 @@ public function register(): void
             'warning' => $e->getMessage()
         ], 202);
     });
+
+    $this->rendrable(function (InvalidDniException $e) {
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 422);
+    });
 }
 }
