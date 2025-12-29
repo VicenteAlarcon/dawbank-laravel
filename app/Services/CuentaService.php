@@ -6,25 +6,35 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\SaldoInsuficienteException;
 use App\Exceptions\InvalidMovementException;
 use App\Exceptions\TaxationException;
+use App\Exceptions\ExistingUserException;
 use App\Services\IbanGenerator;
 use App\Services\DniValidator;
+use App\Services\ExistingUser;
 
 
 class CuentaService{
     public function __construct(
         private IbanGenerator $ibanGenerator,
-        private DniValidator $dniValidator
+        private DniValidator $dniValidator,
+        private ExistingUSer $existingUser
     ){}
     
     Public function crearCuenta(array $data): Cuenta 
     {
-        //Método para generar iban que viene del servicio IbanGenerator//
+        
       
          if (!isset($data['nombre'], $data['apellidos'], $data['dni'])) {
     throw new InvalidArgumentException('Missing required account data');
-}   
-         $iban = $this->ibanGenerator->generateIban();
+        }  
+
          $this->dniValidator->validate($data['dni']);
+    
+         if($this->existingUser->userDniExists($data['dni'])){
+            throw new ExistingUserException("El usuario  ya existe");
+         }
+
+         $iban = $this->ibanGenerator->generateIban();
+         
 
         return Cuenta::create([
            'nombre' => $data['nombre'],
